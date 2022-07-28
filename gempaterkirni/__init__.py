@@ -1,9 +1,21 @@
 """
 Aplikasi Gempa Terkini
 """
+import requests
+import bs4
+
+# soup = bs4.BeautifulSoup(content)
+# print(soup.prettify())
 
 
 def ekstraksi_data():
+    try:
+        content = requests.get("https://www.b mkg.go.id/")
+    except Exception:
+        return None
+    # soup = bs4.BeautifulSoup(content)
+    print(content.status_code)
+
     """
     Tanggal: 26 Juli 2022,
     Waktu: 06:11:01 WIB
@@ -28,6 +40,9 @@ def ekstraksi_data():
 
 
 def tampilkan_data(result):
+    if result is None:
+        print("tidak dapat menampilkan data")
+        return
     print("Gempa Terakhir Berdasarkan BMKG")
     print(f"Tanggal {result['tanggal']} ")
     print(f"Waktu {result['Waktu']} ")
@@ -38,3 +53,5 @@ def tampilkan_data(result):
     print(f"Dirasakan {result['Dirasakan']}")
 
     pass
+
+
