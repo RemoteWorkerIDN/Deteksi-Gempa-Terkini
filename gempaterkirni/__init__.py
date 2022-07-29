@@ -10,33 +10,36 @@ import bs4
 
 def ekstraksi_data():
     try:
-        content = requests.get("https://www.b mkg.go.id/")
+        content = requests.get("https://www.bmkg.go.id/")
     except Exception:
         return None
     # soup = bs4.BeautifulSoup(content)
-    print(content.status_code)
+    if content.status_code == 200:
+        print(content.text)
 
-    """
-    Tanggal: 26 Juli 2022,
-    Waktu: 06:11:01 WIB
-    Magnitudo: 3.5
-    Kedalaman Gempa: 10 km
-    Lokasi: 3.53 LS - 128.25 BT
-    Pusat gempa:  berada di darat 20 km timur laut Ambon
-    Dirasakan (Skala MMI): II - III Ambon
-    :return:
-    """
-    hasil = dict()
-    hasil["tanggal"] = "26 Juli 2022"
-    hasil["Waktu"] = "06:11:01 WIB"
-    hasil["Magnitudo"] = "3.5"
-    hasil["Kedalaman Gempa"] = "10"
-    hasil["Lokasi"] = {"LS": "3,53", "BT": "128,25"}
-    hasil["Pusat Gempa"] = "berada di darat 20 km timur laut Ambon"
-    hasil["Dirasakan"] = "(Skala MMI): II - III Ambon"
-    return hasil
+        """
+        Tanggal: 26 Juli 2022,
+        Waktu: 06:11:01 WIB
+        Magnitudo: 3.5
+        Kedalaman Gempa: 10 km
+        Lokasi: 3.53 LS - 128.25 BT
+        Pusat gempa:  berada di darat 20 km timur laut Ambon
+        Dirasakan (Skala MMI): II - III Ambon
+        :return:
+        """
+        hasil = dict()
+        hasil["tanggal"] = "26 Juli 2022"
+        hasil["Waktu"] = "06:11:01 WIB"
+        hasil["Magnitudo"] = "3.5"
+        hasil["Kedalaman Gempa"] = "10"
+        hasil["Lokasi"] = {"LS": "3,53", "BT": "128,25"}
+        hasil["Pusat Gempa"] = "berada di darat 20 km timur laut Ambon"
+        hasil["Dirasakan"] = "(Skala MMI): II - III Ambon"
+        return hasil
+    else:
+        return None
 
-    pass
+        pass
 
 
 def tampilkan_data(result):
