@@ -15,7 +15,14 @@ def ekstraksi_data():
         return None
     # soup = bs4.BeautifulSoup(content)
     if content.status_code == 200:
-        print(content.text)
+        soup = bs4.BeautifulSoup(content.text, 'html.parser')
+        title = soup.find('title')
+        print(title.string)
+
+        result_tanggal = soup.find('span', {"class": "waktu"})
+        result_tanggal2 = result_tanggal.text.split(',')
+        tanggal = result_tanggal2[0]
+        waktu = result_tanggal2[1]
 
         """
         Tanggal: 26 Juli 2022,
@@ -28,8 +35,8 @@ def ekstraksi_data():
         :return:
         """
         hasil = dict()
-        hasil["tanggal"] = "26 Juli 2022"
-        hasil["Waktu"] = "06:11:01 WIB"
+        hasil["tanggal"] = tanggal  #"26 Juli 2022"
+        hasil["Waktu"] = waktu #"06:11:01 WIB"
         hasil["Magnitudo"] = "3.5"
         hasil["Kedalaman Gempa"] = "10"
         hasil["Lokasi"] = {"LS": "3,53", "BT": "128,25"}
