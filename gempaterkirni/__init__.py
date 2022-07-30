@@ -24,6 +24,32 @@ def ekstraksi_data():
         tanggal = result_tanggal2[0]
         waktu = result_tanggal2[1]
 
+        result = soup.find('div', {'class': 'col-md-6 col-xs-6 gempabumi-detail no-padding'})
+        result = result.findChildren('li')
+        i = 0
+        magnitudo = None
+        kedalaman = None
+        lintang = None
+        bujur = None
+        pusat_gempa = None
+        dirasakan = None
+
+        for re in result:
+            # print(i, re)
+            if i == 1:
+                magnitudo = re.text
+            elif i == 2:
+                kedalaman = re.text
+            elif i == 3:
+                koordinat = re.text.split(' - ')
+                lintang = koordinat[0]
+                bujur = koordinat[1]
+            elif i == 4:
+                lokasi = re.text
+            elif i == 5:
+                dirasakan = re.text
+            i = i + 1
+
         """
         Tanggal: 26 Juli 2022,
         Waktu: 06:11:01 WIB
@@ -35,13 +61,13 @@ def ekstraksi_data():
         :return:
         """
         hasil = dict()
-        hasil["tanggal"] = tanggal  #"26 Juli 2022"
-        hasil["Waktu"] = waktu #"06:11:01 WIB"
-        hasil["Magnitudo"] = "3.5"
-        hasil["Kedalaman Gempa"] = "10"
-        hasil["Lokasi"] = {"LS": "3,53", "BT": "128,25"}
-        hasil["Pusat Gempa"] = "berada di darat 20 km timur laut Ambon"
-        hasil["Dirasakan"] = "(Skala MMI): II - III Ambon"
+        hasil["tanggal"] = tanggal  # "26 Juli 2022"
+        hasil["Waktu"] = waktu  # "06:11:01 WIB"
+        hasil["Magnitudo"] = magnitudo  # 3.5"
+        hasil["Kedalaman Gempa"] = kedalaman  # "10"
+        hasil["Koordinat"] = {"Lintang": lintang, "Bujur": bujur}
+        hasil["Lokasi"] = lokasi  # "berada di darat 20 km timur laut Ambon"
+        hasil["Dirasakan"] = dirasakan  # "(Skala MMI): II - III Ambon"
         return hasil
     else:
         return None
@@ -58,9 +84,9 @@ def tampilkan_data(result):
     print(f"Waktu {result['Waktu']} ")
     print(f"Magnitudo {result['Magnitudo']} ")
     print(f"Kedalaman Gempa {result['Kedalaman Gempa']} ")
-    print(f"Lokasi LS={result['Lokasi']['LS']} BT={result['Lokasi']['BT']}")
-    print(f"Pusat Gempa {result['Pusat Gempa']}")
-    print(f"Dirasakan {result['Dirasakan']}")
+    print(f"Koordinat: Lintang = {result['Koordinat']['Lintang']} Bujur = {result['Koordinat']['Bujur']}")
+    print(f"Pusat Gempa {result['Lokasi']}")
+    print(f"{result['Dirasakan']}")
 
     pass
 
